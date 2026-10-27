@@ -1,0 +1,14 @@
+<!doctype html>
+<html>
+  <body>
+    <h1>Hello Rust WASM</h1>
+    <p>Result: <span id="result"></span></p>
+    <script type="module">
+      const bytes = await fetch('./target/wasm32-unknown-unknown/release/hello_rust_wasm.wasm')
+        .then(r => r.arrayBuffer());
+      const { instance } = await WebAssembly.instantiate(bytes);
+      const add = instance.exports.add;
+      document.getElementById('result').textContent = add(2, 3);
+    </script>
+  </body>
+</html>
